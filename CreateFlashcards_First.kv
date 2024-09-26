@@ -1,0 +1,78 @@
+#:import Window kivy.core.window.Window
+<CreateFlashcards_First>:
+    FloatLayout:
+        Video:
+            id: video
+            source: 'dym.mp4'
+            state: 'play'
+            options: {'eos': 'loop'}
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        Image:
+            source: 'logo2.png'
+            size_hint: 0.568, 0.568
+            pos_hint: {'center_x': 0.5, 'center_y': 0.825}
+
+        Label:
+            id: info_label
+            size_hint_y: None
+            height: Window.height * 0.2
+            pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+            text: 'Enter Name'  # Początkowo pusty, zostanie ustawiony gdy będzie trzeba wyświetlić komunikat
+            font_size: min(Window.height * 0.08, Window.width * 0.08)
+            bold: True  # Pogrubia tekst
+
+        Button:
+            id: btn
+            text: 'Home'
+            size_hint: 0.28, None
+            height: Window.height * 0.08
+            pos_hint: {'x': 0, 'top': 1}
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 0.4, 0.4, 0.4, 1
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [self.height / 4, ]
+            on_release: app.change_screen('main')
+
+        TextInput:
+            id: word
+            hint_text_color: [1,1,1,1]
+            foreground_color: [1,1,1,1]
+            hint_text: "Create name of the file"
+            background_color: [0,0,0,0]
+            background_image: ""
+            background_normal: ""
+            background_active: ""
+            multiline: False
+            size_hint: 0.58 ,0.08
+            pos_hint: {'center_x':0.5, 'center_y':0.45}
+            canvas.before:
+                Color:
+                    rgba: 1,1,1,0.5
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 20,
+
+        Button:
+            text: 'Save'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.20}
+            size_hint: 0.58, None
+            height: Window.height * 0.08
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 0.4, 0.4, 0.4, 1
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [self.height / 4, ]
+            on_press:
+                app.save_word(word.text)
